@@ -64,7 +64,16 @@ function M.show_cues(targets)
 
 		api.nvim_buf_set_lines(bufnr, 0, 0, false, {text})
 
-    local borderchars = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'}
+    local borderchars = {
+      {'╭', 'NormalFloat'},
+      {'─', 'NormalFloat'},
+      {'╮', 'NormalFloat'},
+      {'│', 'NormalFloat'},
+      {'╯', 'NormalFloat'},
+      {'─', 'NormalFloat'},
+      {'╰', 'NormalFloat'},
+      {'│', 'NormalFloat'},
+    }
 
 		local cue_winid = api.nvim_open_win(bufnr, false, {
 			relative = "win",
