@@ -72,45 +72,31 @@ end
 
 --- Shows visual cues for each window.
 --- @param targets table: Map of labels and their respective window objects.
---- @param opts table: Options for showing visual cues.
 --- @return table: List of visual cues that were opened.
-function M.show_cues(targets, opts)
+function M.show_cues(targets)
+
 	-- Reset view.
 	local cues = {}
 	for label, win in pairs(targets) do
 		local bufnr = api.nvim_create_buf(false, true)
 
-		if opts.format_label then
-			label = opts.format_label(label, win.id, win.bufnr)
-		end
+    local text = string.format(' %s ', label)
+    local col = (api.win_get_width(win.id) - text:len()) / 2
+    local row = (api.win_get_height(win.id) - 3) / 2
 
-		local padding = string.rep(" ", 4)
-		local fill = string.rep(" ", label:len())
-
-		local lines = {
-			padding .. fill .. padding,
-			padding .. label .. padding,
-			padding .. fill .. padding,
-		}
-
-		api.nvim_buf_set_lines(bufnr, 0, 0, false, lines)
-
-		local width = label:len() + padding:len() * 2
-		local height = 3
-
-		local center_x = api.nvim_win_get_width(win.id) / 2
-		local center_y = api.nvim_win_get_height(win.id) / 2
+		api.nvim_buf_set_lines(bufnr, 0, 0, false, {text})
 
 		local cue_winid = api.nvim_open_win(bufnr, false, {
 			relative = "win",
 			win = win.id,
-			width = width,
-			height = height,
-			col = math.floor(center_x - width / 2),
-			row = math.floor(center_y - height / 2),
+			width = text:len(),
+			height = 1,
+			col = col,
+			row = row,
+      anchor = 'NE',
 			focusable = false,
 			style = "minimal",
-			border = opts.border,
+			border = "single",
 		})
 
 		pcall(api.nvim_buf_set_option, cue_winid, "buftype", "nofile")

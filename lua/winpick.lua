@@ -1,3 +1,6 @@
+package.loaded["winpick"] = nil
+package.loaded["winpick.internal"] = nil
+
 local internal = require("winpick.internal")
 
 local api = vim.api
@@ -58,7 +61,7 @@ function M.select(opts)
 		targets[next_char] = win
 	end
 
-	local cues = internal.show_cues(targets, opts)
+	local cues = internal.show_cues(targets)
 
 	vim.cmd("mode") -- clear cmdline once
 	print(opts.prompt or defaults.prompt)
