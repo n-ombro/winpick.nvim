@@ -78,6 +78,11 @@ function M.select(opts)
 		return nil, nil
 	end
 
+  if not(string.find('abcdefgABCDEFG', choice)) then
+    vim.api.nvim_command('wincmd '..choice)
+		return nil, nil
+  end
+
 	choice = string.char(choice):upper()
 
 	local win = targets[choice]

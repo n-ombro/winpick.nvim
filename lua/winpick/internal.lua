@@ -1,7 +1,7 @@
 local api = vim.api
 
 local alphabet = {}
-for byte = string.byte("A"), string.byte("Z") do
+for byte = string.byte("a"), string.byte("z") do
 	table.insert(alphabet, string.char(byte))
 end
 
@@ -100,6 +100,7 @@ function M.show_cues(targets)
 		})
 
 		pcall(api.nvim_buf_set_option, cue_winid, "buftype", "nofile")
+		pcall(api.nvim_buf_set_option, cue_winid, "filetype", "winpick")
 
 		table.insert(cues, cue_winid)
 	end
