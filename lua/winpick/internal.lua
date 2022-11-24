@@ -64,6 +64,8 @@ function M.show_cues(targets)
 
 		api.nvim_buf_set_lines(bufnr, 0, 0, false, {text})
 
+    local borderchars = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'}
+
 		local cue_winid = api.nvim_open_win(bufnr, false, {
 			relative = "win",
 			win = win.id,
@@ -74,7 +76,7 @@ function M.show_cues(targets)
       anchor = 'NE',
 			focusable = false,
 			style = "minimal",
-			border = "single",
+			border = borderchars,
 		})
 
 		pcall(api.nvim_buf_set_option, cue_winid, "buftype", "nofile")

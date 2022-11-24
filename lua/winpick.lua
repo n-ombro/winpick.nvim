@@ -60,7 +60,6 @@ function M.select(opts)
 		local next_char = chars[idx % (total_chars + 1)]
 		targets[next_char] = win
 	end
-  print(targets)
 
 	local cues = internal.show_cues(targets)
 
