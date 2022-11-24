@@ -81,8 +81,8 @@ function M.show_cues(targets)
 		local bufnr = api.nvim_create_buf(false, true)
 
     local text = string.format(' %s ', label)
-    local col = (api.win_get_width(win.id) - text:len()) / 2
-    local row = (api.win_get_height(win.id) - 3) / 2
+    local col = (api.nvim_win_get_width(win.id) - text:len()) / 2
+    local row = (api.nvim_win_get_height(win.id) - 3) / 2
 
 		api.nvim_buf_set_lines(bufnr, 0, 0, false, {text})
 
