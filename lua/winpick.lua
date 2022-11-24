@@ -78,8 +78,10 @@ function M.select(opts)
 		return nil, nil
 	end
 
-  if not(string.find('abcdefgABCDEFG', choice)) then
-    vim.api.nvim_command('wincmd '..choice)
+  local char = string.char(choice)
+  if not string.find('abcdefgABCDEFG', char) then
+    print('wincmd '..choice)
+    api.nvim_command('wincmd '..char)
 		return nil, nil
   end
 
