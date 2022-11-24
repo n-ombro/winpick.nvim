@@ -30,7 +30,7 @@ function M.select(opts)
 	-- Filter out some buffers according to configuration.
 	local eligible_wins = vim.tbl_filter(function(win)
 		if opts.filter then
-			return opts.filter(win.id, win.bufnr, defaults.filter)
+			return opts.filter(win.id, win.bufnr)
 		end
 
 		return true
@@ -60,6 +60,7 @@ function M.select(opts)
 		local next_char = chars[idx % (total_chars + 1)]
 		targets[next_char] = win
 	end
+  print(targets)
 
 	local cues = internal.show_cues(targets)
 
@@ -83,9 +84,7 @@ function M.select(opts)
 		return nil, nil
   end
 
-	choice = char:upper()
-
-	local win = targets[choice]
+	local win = targets[char]
 
 	if win then
 		return win.id, win.bufnr
