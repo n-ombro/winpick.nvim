@@ -64,7 +64,6 @@ function M.select(opts)
 	local cues = internal.show_cues(targets)
 
 	vim.cmd("mode") -- clear cmdline once
-	print(opts.prompt or defaults.prompt)
 
 	local ok, choice = pcall(vim.fn.getchar) -- Ctrl-C returns an error
 
@@ -80,12 +79,11 @@ function M.select(opts)
 
   local char = string.char(choice)
   if not string.find('abcdefgABCDEFG', char) then
-    print('wincmd '..choice)
     api.nvim_command('wincmd '..char)
 		return nil, nil
   end
 
-	choice = string.char(choice):upper()
+	choice = char:upper()
 
 	local win = targets[choice]
 

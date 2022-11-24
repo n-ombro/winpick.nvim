@@ -5,35 +5,13 @@ for byte = string.byte("a"), string.byte("z") do
 	table.insert(alphabet, string.char(byte))
 end
 
-for byte = string.byte("0"), string.byte("9") do
-	table.insert(alphabet, string.char(byte))
-end
-
---- Shows label and buffer name, if available. Else, show only the label.
---- @param label string: Label to be shown alongside the buffer name.
---- @param _ number: ID of the selected window.
---- @param bufnr number: ID of the selected window's buffer.
---- @return string: The label as is.
-local function default_label_formatter(label, _, bufnr)
-	local buf_name = api.nvim_buf_get_name(bufnr)
-
-	if buf_name:len() == 0 then
-		return label
-	end
-
-	return string.format("%s: %s", label, vim.fn.fnamemodify(buf_name, ":~:."))
-end
-
 local M = {}
 
 --- Builds the default options.
 --- @return table: The defaults.
 function M.defaults()
 	return {
-		border = "double",
 		filter = nil,
-		prompt = "Pick a window: ",
-		format_label = default_label_formatter,
 		chars = nil,
 	}
 end
