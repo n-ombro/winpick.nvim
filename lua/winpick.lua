@@ -36,18 +36,33 @@ function M.select(opts)
 		return true
 	end, wins)
 
-  if #eligible_wins <= 2 then
+	if #eligible_wins == 0 then
+		eligible_wins = wins
+	end
+
+	if #eligible_wins == 1 then
+		local win = eligible_wins[1]
+		return win.id, win.bufnr
+	end
+
+  if #eligible_wins == 2 then
+    vim.cmd("mode") -- clear cmdline once
+
+    local ok, choice = pcall(vim.fn.getchar) -- Ctrl-C returns an error
+
+    vim.cmd("mode") -- clear cmdline again to remove pick-up message
+
+    local is_ctrl_c = not ok
+    local is_esc = choice == ESC_CODE
+
+    if is_ctrl_c or is_esc then
+      return nil, nil
+    end
+
+    local char = string.char(choice)
+    api.nvim_command('wincmd '..char)
     return nil, nil
   end
-
-	-- if #eligible_wins == 0 then
-	-- 	eligible_wins = wins
-	-- end
-	--
-	-- if #eligible_wins == 1 then
-	-- 	local win = eligible_wins[1]
-	-- 	return win.id, win.bufnr
-	-- end
 
 	local targets = {}
 	local chars = internal.resolve_chars(opts.chars or {})
