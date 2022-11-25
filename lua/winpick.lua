@@ -36,14 +36,18 @@ function M.select(opts)
 		return true
 	end, wins)
 
-	if #eligible_wins == 0 then
-		eligible_wins = wins
-	end
+  if #eligible_wins <= 2 then
+    return nil, nil
+  end
 
-	if #eligible_wins == 1 then
-		local win = eligible_wins[1]
-		return win.id, win.bufnr
-	end
+	-- if #eligible_wins == 0 then
+	-- 	eligible_wins = wins
+	-- end
+	--
+	-- if #eligible_wins == 1 then
+	-- 	local win = eligible_wins[1]
+	-- 	return win.id, win.bufnr
+	-- end
 
 	local targets = {}
 	local chars = internal.resolve_chars(opts.chars or {})
